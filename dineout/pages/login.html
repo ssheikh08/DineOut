@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Form</title>
+    <link rel="stylesheet" type="text/css" href="css/loginstyle.css" />
+  </head>
+  <body>
+    <div class="login">
+      <form id="login" method="get" action="login.php">
+        <h1>DineOut</h1>
+        <h2>Your place to reserve a restaurant</h2>
+        <label><b>Email Address</b></label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your Email Address"
+          required
+        />
+        <br /><br />
+        <label><b>Password</b></label>
+        <input
+          type="Password"
+          name="Pass"
+          id="Pass"
+          placeholder="Enter your Password"
+          required
+        />
+        <br /><br />
+        <input type="button" name="log" id="log" value="Log In" />
+        <br /><br />
+        <input
+          type="button"
+          name="signup"
+          id="signup"
+          value="Sign Up"
+          onclick="document.location='signup.html'"
+        />
+        <br /><br />
+        <input type="checkbox" id="check" />
+        <span>Remember me</span>
+        <br /><br />
+        <a href="#">Forgot Password?</a>
+      </form>
+    </div>
+  </body>
+</html>
