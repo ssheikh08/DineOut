@@ -1,0 +1,11 @@
+axios
+  .post('http://localhost:1337/signups', {
+    Username: 'Jon Lewis',
+    Password: 'abc123456',
+    FirstName: 'Jon',
+    LastName : 'Lewis',
+    Email:'jlewis@gmail.com'
+  })
+  .then(response => {
+    console.log(response);
+  }).catch(error=>{ console.log(response);
