@@ -32,6 +32,9 @@ handleInputChange = ({ target: { name, value } }) => {
         try {
           const response = await axios.post('https://dine-out-syracuse.herokuapp.com/signups',this.state.modifiedData);
           console.log(response);
+          const loginResponse = await axios.post('https://dine-out-syracuse.herokuapp.com/user-logins',{
+          'username':this.state.modifiedData.username,'email':this.state.modifiedData.email,'password':this.state.modifiedData.password});
+          console.log(loginResponse);
         } catch (error) {
           this.setState({ error });
         }
@@ -39,6 +42,7 @@ handleInputChange = ({ target: { name, value } }) => {
 
     render() {
       const {modifiedData} = this.state;
+
         return (
             <div className="App">
         <form onSubmit = {this.handleSubmit}>
