@@ -1,37 +1,79 @@
+/* eslint-disable no-undef */
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export default class SignUp extends Component {
+    
+    constructor(props) {
+    super(props);
+    this.state = {
+      modifiedData: {
+        'username': '',
+        'password': '',
+        'firstName': '',
+        'lastName': '',
+        'email': ''
+      }
+    }
+}
+
+handleInputChange = ({ target: { name, value } }) => {
+    this.setState(prev => ({
+      ...prev,
+      modifiedData: {
+        ...prev.modifiedData,
+        [name]: value,
+      },
+    }));
+  };
+
+    handleSubmit = async e => {
+      e.preventDefault();
+        try {
+          const response = await axios.post('https://dine-out-syracuse.herokuapp.com/signups',this.state.modifiedData);
+          console.log(response);
+        } catch (error) {
+          this.setState({ error });
+        }
+      };
+
     render() {
+      const {modifiedData} = this.state;
         return (
-            <form>
-                <h3>Register</h3>
+            <div className="App">
+        <form onSubmit = {this.handleSubmit}>
+                    <h3>Register</h3>
+                    <br />
+                        <label>User name
+                        <input name="username" type="text" onChange = {this.handleInputChange} value={modifiedData.username}/>
+                         </label>
+                        <br />
+                    
+                    
+                        <label>First name
+                        <input name="firstName" type="text" onChange = {this.handleInputChange} value={modifiedData.firstName}/>
+                        </label>
+                        <br />
+                    
+                        <label>Last name
+                        <input name="lastName" type="text"  onChange = {this.handleInputChange} value={modifiedData.lastName}/>
+                        </label>
+                        <br />
 
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
-                </div>
+                        <label>Email
+                        <input name="email" type="email" onChange = {this.handleInputChange} value={modifiedData.email}/>
+                        </label>
+                        <br />
 
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
-                </div>
 
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Register</button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="#">log in?</a>
-                </p>
-            </form>
+                        <label>Password
+                        <input name="password" type="password" onChange = {this.handleInputChange} value={modifiedData.password}/>
+                        </label>
+                        <br />
+                    <button type="submit">Submit</button>
+                    {/* <button onClick={console.log(this.state)} type="submit" className="btn btn-dark btn-lg btn-block">Register</button> */}
+                </form>
+            </div>
         );
     }
 }
