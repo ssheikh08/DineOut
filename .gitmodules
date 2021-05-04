@@ -1,0 +1,3 @@
+[submodule "dineout/my-app"]
+	path = dineout/my-app
+	url = https://bitbucket.org/Rakshith_Shivanna/dineout-dev/src/dev/
