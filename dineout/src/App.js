@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
+import LoginMerchant from "./components/merchantlogin.component";
+import SignUpMerchant from "./components/merchantsignup.component";
 
 function App() {
   return (<Router>
@@ -20,6 +22,12 @@ function App() {
               <li className="nav-item">
                 <Link className="nav-link" to={"/sign-up"}>Sign up</Link>
               </li>
+              <li className ="nav-item">
+                <Link className = "nav-link" to ={"/merchant-signin"}>Merchant Sign in </Link>
+              </li>
+              <li className ="nav-item">
+                <Link className = "nav-link" to ={"/merchant-signup"}>Merchant Sign up </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -31,6 +39,8 @@ function App() {
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
+            <Route path = "/merchant-signin" component ={LoginMerchant}/>
+            <Route path = "/merchant-signup" component = {SignUpMerchant}/>
           </Switch>
         </div>
       </div>
