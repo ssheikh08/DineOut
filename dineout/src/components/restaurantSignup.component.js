@@ -51,23 +51,31 @@ handleInputChange = ({ target: { name, value } }) => {
                     
                     
                     <div className="form-group">
+                    <div id="mem" style= {{marginRight: 16 + 'em'}}>
                         <label>Restaurant Name</label>
+                        </div>
                         <input name="restaurantName" className="form-control" type="text" placeholder="Enter your User Name" onChange = {this.handleInputChange} value={modifiedData.username}/>
                        </div>
 
 
                        <div className="form-group">
+                       <div id="mem" style= {{marginRight: 16 + 'em'}}>
                         <label>Address </label>
+                        </div>
                         <input name="address" className="form-control" type="text" placeholder="Enter Your First Name"onChange = {this.handleInputChange} value={modifiedData.firstName}/>
                         </div>
                     
                         <div className="form-group">
+                        <div id="mem" style= {{marginRight: 16 + 'em'}}>
                         <label>City </label>
+                        </div>
                         <input name="city" className="form-control" type="text"  onChange = {this.handleInputChange} value={modifiedData.lastName}/>
                         </div>
 
                         <div className="form-group">
+                        <div id="mem" style= {{marginRight: 16 + 'em'}}>
                         <label>Zip Code</label>
+                        </div>
                         <input name="zipcode" className="form-control" type="number" placeholder="Enter Your Password" onChange = {this.handleInputChange} value={modifiedData.password}/>
                         </div>
                         
