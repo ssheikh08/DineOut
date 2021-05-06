@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { Component } from "react";
 import axios from "axios";
 
@@ -32,9 +31,6 @@ handleInputChange = ({ target: { name, value } }) => {
         try {
           const response = await axios.post('https://dine-out-syracuse.herokuapp.com/signups',this.state.modifiedData);
           console.log(response);
-          const loginResponse = await axios.post('https://dine-out-syracuse.herokuapp.com/user-logins',{
-          'username':this.state.modifiedData.username,'email':this.state.modifiedData.email,'password':this.state.modifiedData.password});
-          console.log(loginResponse);
         } catch (error) {
           this.setState({ error });
         }
@@ -42,40 +38,52 @@ handleInputChange = ({ target: { name, value } }) => {
 
     render() {
       const {modifiedData} = this.state;
-
         return (
             <div className="App">
         <form onSubmit = {this.handleSubmit}>
                     <h3>Register</h3>
-                    <br />
-                        <label>User name
-                        <input name="username" type="text" onChange = {this.handleInputChange} value={modifiedData.username}/>
-                         </label>
-                        <br />
                     
                     
-                        <label>First name
-                        <input name="firstName" type="text" onChange = {this.handleInputChange} value={modifiedData.firstName}/>
-                        </label>
-                        <br />
+                    <div className="form-group">
+                    <div id="mem" style= {{marginRight: 16 + 'em'}}>
+                        <label>User name</label>
+                        </div>
+                        <input name="username" className="form-control" type="text" placeholder="Enter your User Name" onChange = {this.handleInputChange} value={modifiedData.username}/>
+                       </div>
+
+
+                       <div className="form-group">
+                       <div id="mem" style= {{marginRight: 16 + 'em'}}>
+                        <label>First Name</label>
+                        </div>
+                        <input name="firstName" className="form-control" type="text" placeholder="Enter Your First Name"onChange = {this.handleInputChange} value={modifiedData.firstName}/>
+                        </div>
                     
-                        <label>Last name
-                        <input name="lastName" type="text"  onChange = {this.handleInputChange} value={modifiedData.lastName}/>
-                        </label>
-                        <br />
+                        <div className="form-group">
+                        <div id="mem" style= {{marginRight: 16 + 'em'}}>
+                        <label>Last name</label>
+                        </div>
+                        <input name="lastName" className="form-control" type="text" placeholder="Enter Your Last Name" onChange = {this.handleInputChange} value={modifiedData.lastName}/>
+                        </div>
 
-                        <label>Email
-                        <input name="email" type="email" onChange = {this.handleInputChange} value={modifiedData.email}/>
-                        </label>
-                        <br />
+                        <div className="form-group">
+                        <div id="mem" style= {{marginRight: 18 + 'em'}}>
+                        <label>Email</label>
+                        </div>
+                        <input name="email" className="form-control" type="email" placeholder="Enter email address" onChange = {this.handleInputChange} value={modifiedData.email}/>
+                        </div>
 
-
-                        <label>Password
-                        <input name="password" type="password" onChange = {this.handleInputChange} value={modifiedData.password}/>
-                        </label>
-                        <br />
-                    <button type="submit">Submit</button>
-                    {/* <button onClick={console.log(this.state)} type="submit" className="btn btn-dark btn-lg btn-block">Register</button> */}
+                        <div className="form-group">
+                        <div id="mem" style= {{marginRight: 16 + 'em'}}>
+                        <label>Password</label>
+                        </div>
+                        <input name="password" className="form-control" type="password" placeholder="Enter Your Password" onChange = {this.handleInputChange} value={modifiedData.password}/>
+                        </div>
+                        
+                        
+                        <button type="submit" className="btn btn-dark btn-lg btn-block">Submit</button> 
+                        
+                    
                 </form>
             </div>
         );
