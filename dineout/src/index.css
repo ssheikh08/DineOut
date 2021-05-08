@@ -46,6 +46,8 @@ body, html, .App, #root, .outer {
   margin-bottom: 20px;
 }
 
+
+
 .outer .form-control:focus {
   border-color: #167bff;
   box-shadow: none;

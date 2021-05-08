@@ -2,14 +2,18 @@ import React from 'react';
 //import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 
 import Login from "./components/login.component";
 import SignUp from "./components/signup.component";
 import LoginMerchant from "./components/merchantlogin.component";
 import SignUpMerchant from "./components/merchantsignup.component";
+import AppointmentApp from "./components/reservation.component";
 
 function App() {
-  return (<Router>
+  return (
+    <MuiThemeProvider>
+  <Router>
     <div className="App">
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
@@ -35,16 +39,21 @@ function App() {
 
       <div className="outer">
         <div className="inner">
+          
           <Switch>
             <Route exact path='/' component={Login} />
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up" component={SignUp} />
             <Route path = "/merchant-signin" component ={LoginMerchant}/>
             <Route path = "/merchant-signup" component = {SignUpMerchant}/>
+          
+            <Route path = "/reservation" component = {AppointmentApp}/>
+            
           </Switch>
         </div>
       </div>
     </div></Router>
+     </MuiThemeProvider>
   );
 }
 
