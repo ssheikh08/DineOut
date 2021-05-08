@@ -26,7 +26,7 @@ export default class Login extends Component {
         handleSubmit = async e => {
           e.preventDefault();
             try {
-              const response = await axios.get('https://dine-out-syracuse.herokuapp.com/user-logins',this.state.modifiedData);
+              const response = await axios.get('https://dine-out-syracuse.herokuapp.com/signups');
               console.log(response);
              //var loginResponse = await axios.get('https://dine-out-syracuse.herokuapp.com/signups');
               var result = response.data
@@ -40,6 +40,8 @@ export default class Login extends Component {
                   if (result[items]['password']=== password){
                     
                     alert('True');
+                    //localStorage.setItem('rememberMe', "rememberMe");
+                    localStorage.setItem('userID', result[items]['id']);
                     
                   }
                   else {
