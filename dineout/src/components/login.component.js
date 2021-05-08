@@ -28,29 +28,18 @@ export default class Login extends Component {
             try {
               const response = await axios.get('https://dine-out-syracuse.herokuapp.com/signups');
               console.log(response);
-             //var loginResponse = await axios.get('https://dine-out-syracuse.herokuapp.com/signups');
               var result = response.data
               function userID(uName, password)
               {
-              for (var items in result)
-              { 
-                
-                if(result[items]['email']===uName)
-                {
-                  if (result[items]['password']=== password){
-                    
-                    alert('True');
-                    //localStorage.setItem('rememberMe', "rememberMe");
-                    localStorage.setItem('userID', result[items]['id']);
-                    
+                  var row = result.filter(result => result['email']==uName && result['password']==password)
+                  if(row[0]['id'])
+                  {
+                    alert('Success')
                   }
-                  else {
-                   
-                    alert('Login failed. Enter correct password or reset password');
-                    
+                  else
+                  {
+                  alert('login Failed')
                   }
-                }
-              }
               }
             userID(this.state.modifiedData.email, this.state.modifiedData.password);
               
