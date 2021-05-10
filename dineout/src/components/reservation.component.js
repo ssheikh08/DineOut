@@ -37,6 +37,7 @@ class AppointmentApp extends Component {
       finished: false,
       smallScreen: window.innerWidth < 768,
       stepIndex: 0
+      
     };
   }
   //previous scheduled appointments slots are retrieved
@@ -131,6 +132,7 @@ class AppointmentApp extends Component {
       ? initialSchedule
       : appointments.reduce((currentSchedule, appointment) => {
           const { slot_date, slot_time } = appointment;
+          console.log(slot_date,slot_time)
           const dateString = moment(slot_date, "YYYY-DD-MM").format(
             "YYYY-DD-MM"
           );
@@ -256,9 +258,11 @@ class AppointmentApp extends Component {
     );
   }
 
-
+  
 
   render() {
+    //restaurant id down!!!!!
+    const id = this.props.match.params.id;
     const {
       finished,
       isLoading,

@@ -9,6 +9,8 @@ import SignUp from "./components/signup.component";
 import LoginMerchant from "./components/merchantlogin.component";
 import SignUpMerchant from "./components/merchantsignup.component";
 import AppointmentApp from "./components/reservation.component";
+import Home from './components/Home/Home';
+import RestaurantDetails from './components/Restaurant/RestaurantDetails';
 
 function App() {
   return (
@@ -47,7 +49,9 @@ function App() {
             <Route path = "/merchant-signin" component ={LoginMerchant}/>
             <Route path = "/merchant-signup" component = {SignUpMerchant}/>
           
-            <Route path = "/reservation" component = {AppointmentApp}/>
+            <Route path = "/reservation/:id" component = {AppointmentApp}/>
+            <Route path="/home" component={Home} />
+            <Route path="/restaurant/:id" component={RestaurantDetails}/>
             
           </Switch>
         </div>
