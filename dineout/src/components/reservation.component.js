@@ -36,15 +36,19 @@ class AppointmentApp extends Component {
       appointmentMeridiem: 0,
       finished: false,
       smallScreen: window.innerWidth < 768,
-      stepIndex: 0
+      stepIndex: 0,
+      responseData : [] 
       
     };
   }
   //previous scheduled appointments slots are retrieved
   componentWillMount() {
-    axios.get('https://dine-out-syracuse.herokuapp.com/' + "slots").then(response => {
+    var RID = this.props.match.params.id;
+
+    axios.get('https://dine-out-syracuse.herokuapp.com/' + "restreservations").then(response => {
       console.log("response via db: ", response.data);
-      this.handleDBReponse(response.data);
+      this.state.responseData.push(response.data.filter(d=>d.restID==RID))
+      this.handleDBReponse(response.data.filter(d=>d.restID==RID));
       console.log("hello");
       console.log(response);
     });
@@ -73,9 +77,15 @@ class AppointmentApp extends Component {
       slot_date: moment(this.state.appointmentDate).format("YYYY-DD-MM"),
       slot_time: this.state.appointmentSlot
     };
-    console.log(newAppointment);
+    var ID = this.props.match.params.id;
+     
+   const result = this.state.responseData[0]
+   var length = result.filter(d => (d.slot_time == newAppointment.slot_time && d.slot_date == newAppointment.slot_date )).length
+   var uID = localStorage.getItem('userID')
+  //  console.log(uID)
+  //  console.log(length)
     axios
-      .post('https://dine-out-syracuse.herokuapp.com/reservations', {userID: 1, restID: 2, slot_time:newAppointment.slot_time, slot_date: newAppointment.slot_date})
+      .post('https://dine-out-syracuse.herokuapp.com/restreservations', {userID: uID, restID: ID, slot_date: newAppointment.slot_date,slot_time:newAppointment.slot_time,count:length+1})
       .then(response =>
         this.setState({
           confirmationSnackbarMessage: "Appointment succesfully added!",
@@ -131,15 +141,17 @@ class AppointmentApp extends Component {
     const schedule = !appointments.length
       ? initialSchedule
       : appointments.reduce((currentSchedule, appointment) => {
-          const { slot_date, slot_time } = appointment;
+          const { slot_date, slot_time,count} = appointment;
           console.log(slot_date,slot_time)
           const dateString = moment(slot_date, "YYYY-DD-MM").format(
             "YYYY-DD-MM"
           );
+          // eslint-disable-next-line no-unused-expressions
           !currentSchedule[slot_date]
             ? (currentSchedule[dateString] = Array(8).fill(false))
             : null;
-          Array.isArray(currentSchedule[dateString])
+          // eslint-disable-next-line no-unused-expressions
+          (Array.isArray(currentSchedule[dateString])&& (count ==3))
             ? (currentSchedule[dateString][slot_time] = true)
             : null;
           return currentSchedule;
@@ -147,6 +159,7 @@ class AppointmentApp extends Component {
 
     for (let day in schedule) {
       let slots = schedule[day];
+      // eslint-disable-next-line no-unused-expressions
       slots.length
         ? slots.every(slot => slot === true) ? (schedule[day] = true) : null
         : null;
@@ -303,7 +316,7 @@ class AppointmentApp extends Component {
     return (
       <div>
         <AppBar
-          title="Appointment Scheduler"
+          title="Reservation Portal"
           iconClassNameRight="muidocs-icon-navigation-expand-more"
         />
         <section
@@ -326,7 +339,7 @@ class AppointmentApp extends Component {
             >
               <Step>
                 <StepLabel>
-                  Choose an available day for your appointment
+                  Choose an available day for your reservation
                 </StepLabel>
                 <StepContent>
                   {DatePickerExampleSimple()}
@@ -335,7 +348,7 @@ class AppointmentApp extends Component {
               </Step>
               <Step disabled={!data.appointmentDate}>
                 <StepLabel>
-                  Choose an available time for your appointment
+                  Choose an available time for your reservation
                 </StepLabel>
                 <StepContent>
                   <SelectField
@@ -428,7 +441,7 @@ class AppointmentApp extends Component {
             modal={true}
             open={confirmationModalOpen}
             actions={modalActions}
-            title="Confirm your appointment"
+            title="Confirm your Reservation"
           >
             {this.renderAppointmentConfirmation()}
           </Dialog>

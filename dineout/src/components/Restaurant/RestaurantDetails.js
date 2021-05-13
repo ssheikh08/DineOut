@@ -53,15 +53,13 @@ export default class RestaurantDetails extends React.Component{
                                 <p className = "lead">{restaurant.restAddr}</p>
                                 <p className = "lead">{restaurant.restCity}</p>
                             </Jumbotron>
-                            <Link to = {{
-                                    pathname: `/reservation/${restaurant.id}`, restaurantObj: restaurant,
-                                }}>
-                            <Button className="w-100 p-2">
-                                {/* Trigger navigation to reserve tables component */}
-                                Reserve Table
-                            </Button>
-                            </Link>
-                            <div className="col-sm-12 my-3 text-center">
+                            
+                           
+                           
+                        </div>
+                        <div>
+                           
+                            <div className="col-sm-12 my-3 text-center" >
                                 <StarRatings
                                     rating={this.state.restaurant.restRatings}
                                     starRatedColor="gold"
@@ -69,7 +67,16 @@ export default class RestaurantDetails extends React.Component{
                                     name='rating'
                                 />
                             </div>
-                        </div>
+                            <Link to = {{
+                                    pathname: `/reservation/${restaurant.id}`, restaurantObj: restaurant,
+                                }}>
+                            <Button className="myButton text" style= {{width: 25 + 'em'}}>
+                                {/* Trigger navigation to reserve tables component */}
+                                Reserve Table
+                            </Button>
+                            </Link>
+                            </div>
+                          
                         {/* </div> */}
                     </div>
                 </div>

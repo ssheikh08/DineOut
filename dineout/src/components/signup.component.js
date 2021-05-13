@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import axios from "axios";
+import {Redirect} from 'react-router-dom'
 
 export default class SignUp extends Component {
     
@@ -35,10 +36,17 @@ handleInputChange = ({ target: { name, value } }) => {
         } catch (error) {
           this.setState({ error });
         }
+        this.setState({
+          userLoggedIn: true
+        })
       };
 
     render() {
       const {modifiedData} = this.state;
+      if(this.state.userLoggedIn){
+        return (<Redirect to="/sign-in" />);
+
+      }
         return (
             <div className="App">
         <form onSubmit = {this.handleSubmit}>

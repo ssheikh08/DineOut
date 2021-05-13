@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { Component } from "react";
 import axios from "axios";
+import {Redirect} from 'react-router-dom'
 
 export default class SignUpMerchant extends Component {
     
@@ -36,12 +37,21 @@ handleInputChange = ({ target: { name, value } }) => {
           console.log(this.state.modifiedData);
           console.log(response);
         } catch (error) {
+          console.log(this.state.modifiedData);
           this.setState({ error });
         }
+        this.setState({
+          userLoggedIn: true
+        })
       };
 
     render() {
       const {modifiedData} = this.state;
+      
+      if(this.state.userLoggedIn){
+        return (<Redirect to="/merchant-signin" />);
+
+      }
         return (
           
             <div className="App">
@@ -83,7 +93,7 @@ handleInputChange = ({ target: { name, value } }) => {
                         <div id="mem" style= {{marginRight: 14.4 + 'em'}}>
                         <label>Phone Number </label>
                         </div>
-                        <input name="phoneNumber" className="form-control" type="tel" placeholder="Enter phone number" onChange = {this.handleInputChange} value={modifiedData.phone}/>
+                        <input name="phoneNumber" className="form-control" type="text" placeholder="Enter phone number" onChange = {this.handleInputChange} value={modifiedData.phone}/>
                         </div>
 
                         <div className="form-group">

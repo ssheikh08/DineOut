@@ -1,5 +1,5 @@
 import React from 'react';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -11,6 +11,7 @@ import SignUpMerchant from "./components/merchantsignup.component";
 import AppointmentApp from "./components/reservation.component";
 import Home from './components/Home/Home';
 import RestaurantDetails from './components/Restaurant/RestaurantDetails';
+import RestaurantSignup from './components/registerrestaurant.component';
 
 function App() {
   return (
@@ -34,13 +35,19 @@ function App() {
               <li className ="nav-item">
                 <Link className = "nav-link" to ={"/merchant-signup"}>Merchant Sign up </Link>
               </li>
+              <li className ="nav-item">
+            <div className = "nav-link" type = "text" > </div> </li>
             </ul>
+            
           </div>
         </div>
       </nav>
-
+      
       <div className="outer">
+        
         <div className="inner">
+
+         
           
           <Switch>
             <Route exact path='/' component={Login} />
@@ -50,11 +57,25 @@ function App() {
             <Route path = "/merchant-signup" component = {SignUpMerchant}/>
           
             <Route path = "/reservation/:id" component = {AppointmentApp}/>
-            <Route path="/home" component={Home} />
-            <Route path="/restaurant/:id" component={RestaurantDetails}/>
+            <Route path = "/restaurantSignup" component = {RestaurantSignup}/>
             
+            
+          
           </Switch>
         </div>
+        <div className="newinner">
+
+         
+          
+<Switch>
+
+<Route path="/restaurant/:id" component={RestaurantDetails}/>
+  <Route path="/home" component={Home} />
+  
+
+</Switch>
+</div>
+    
       </div>
     </div></Router>
      </MuiThemeProvider>
