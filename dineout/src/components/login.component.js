@@ -1,6 +1,7 @@
 
 import React, { Component } from "react";
 import axios from "axios";
+import {Redirect} from 'react-router-dom'
 
 export default class Login extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class Login extends Component {
                 modifiedData: {
                   'email':'',
                   'password':''
-                }
+                },
+                userLoggedIn: false
               }
     }
 
@@ -30,27 +32,30 @@ export default class Login extends Component {
               console.log(response);
              //var loginResponse = await axios.get('https://dine-out-syracuse.herokuapp.com/signups');
               var result = response.data
-              function userID(uName, password)
+              const userID = (uName, password) =>
               {
-              for (var items in result)
-              { 
-                
-                if(result[items]['email']===uName)
-                {
-                  if (result[items]['password']=== password){
+                for (var items in result)
+                { 
+                  
+                  if(result[items]['email']===uName)
+                  {
+                    if (result[items]['password']=== password){
+                      
+                      console.log("true")
+                      //localStorage.setItem('rememberMe', "rememberMe");
+                      this.setState({
+                        userLoggedIn: true
+                      })
+                      localStorage.setItem('userID', result[items]['id']);
+                      
+                    }
+                    else {
                     
-                    alert('True');
-                    //localStorage.setItem('rememberMe', "rememberMe");
-                    localStorage.setItem('userID', result[items]['id']);
-                    
-                  }
-                  else {
-                   
-                    alert('Login failed. Enter correct password or reset password');
-                    
+                      alert('Login failed. Enter correct password or reset password');
+                      
+                    }
                   }
                 }
-              }
               }
             userID(this.state.modifiedData.email, this.state.modifiedData.password);
               
@@ -61,7 +66,11 @@ export default class Login extends Component {
 
     render() {
       const{modifiedData} = this.state;
+      console.log(this.state);
+      if(this.state.userLoggedIn){
+        return (<Redirect to="/home" />);
 
+      }
         return (
           <div className ="App">
             <form onSubmit = {this.handleSubmit}>
