@@ -41,7 +41,6 @@ export default class Login extends Component {
                   {
                     if (result[items]['password']=== password){
                       
-                      console.log("true")
                       //localStorage.setItem('rememberMe', "rememberMe");
                       this.setState({
                         userLoggedIn: true
@@ -66,7 +65,6 @@ export default class Login extends Component {
 
     render() {
       const{modifiedData} = this.state;
-      console.log(this.state);
       if(this.state.userLoggedIn){
         return (<Redirect to="/home" />);
 
