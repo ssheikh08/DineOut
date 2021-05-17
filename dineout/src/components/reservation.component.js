@@ -10,6 +10,7 @@ import MenuItem from "material-ui/MenuItem";
 import TextField from "material-ui/TextField";
 import SnackBar from "material-ui/Snackbar";
 import Card from "material-ui/Card";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Step,
   Stepper,
@@ -37,14 +38,15 @@ class AppointmentApp extends Component {
       finished: false,
       smallScreen: window.innerWidth < 768,
       stepIndex: 0,
-      responseData : [] 
-      
+      responseData : [],
+      signupData : [],
+      restaurantData : []
     };
   }
   //previous scheduled appointments slots are retrieved
   componentWillMount() {
     var RID = this.props.match.params.id;
-
+    var uID = localStorage.getItem('userID');
     axios.get('https://dine-out-syracuse.herokuapp.com/' + "restreservations").then(response => {
       console.log("response via db: ", response.data);
       this.state.responseData.push(response.data.filter(d=>d.restID==RID))
@@ -52,6 +54,17 @@ class AppointmentApp extends Component {
       console.log("hello");
       console.log(response);
     });
+
+    axios.get('https://dine-out-syracuse.herokuapp.com/restaurant-infos').then(response => {
+      this.state.restaurantData = response.data.filter(d=>d.id==RID)
+      console.log(response);
+    });
+
+    axios.get('https://dine-out-syracuse.herokuapp.com/signups').then(response => {
+      this.state.signupData = response.data.filter(d=>d.id==uID)
+      console.log(response);
+    });
+
   }
   //set state
   handleSetAppointmentDate(date) {
@@ -78,14 +91,15 @@ class AppointmentApp extends Component {
       slot_time: this.state.appointmentSlot
     };
     var ID = this.props.match.params.id;
-     
-   const result = this.state.responseData[0]
+  console.log(this.state.restaurantData[0])
+  console.log(this.state.signupData[0])
+  const result = this.state.responseData[0]
    var length = result.filter(d => (d.slot_time == newAppointment.slot_time && d.slot_date == newAppointment.slot_date )).length
    var uID = localStorage.getItem('userID')
-  //  console.log(uID)
-  //  console.log(length)
     axios
-      .post('https://dine-out-syracuse.herokuapp.com/restreservations', {userID: uID, restID: ID, slot_date: newAppointment.slot_date,slot_time:newAppointment.slot_time,count:length+1})
+      .post('https://dine-out-syracuse.herokuapp.com/restreservations', {userID: uID, restID: ID, 
+      slot_date: newAppointment.slot_date,slot_time:newAppointment.slot_time,count:length+1,
+    restaurant_info : this.state.restaurantData[0], signup : this.state.signupData[0]})
       .then(response =>
         this.setState({
           confirmationSnackbarMessage: "Appointment succesfully added!",
@@ -135,6 +149,7 @@ class AppointmentApp extends Component {
   //handle the appointment slot data from the database
   handleDBReponse(response) {
     const appointments = response;
+    const limit=appointments[0].restaurant_info.capacity
     const today = moment().startOf("day"); //start of today 12 am
     const initialSchedule = {};
     initialSchedule[today.format("YYYY-DD-MM")] = true;
@@ -151,7 +166,7 @@ class AppointmentApp extends Component {
             ? (currentSchedule[dateString] = Array(8).fill(false))
             : null;
           // eslint-disable-next-line no-unused-expressions
-          (Array.isArray(currentSchedule[dateString])&& (count ==3))
+          (Array.isArray(currentSchedule[dateString])&& (count ==limit))
             ? (currentSchedule[dateString][slot_time] = true)
             : null;
           return currentSchedule;
@@ -313,7 +328,32 @@ class AppointmentApp extends Component {
       />
     ];
     
+
     return (
+      <div className="App">
+             
+             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand" to={"/home"}>Dine-Out</Link>
+         
+        </div>
+        
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to={"/profile"}>Profile</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/"}>Logout</Link>
+              </li>
+              </ul>
+
+              </div>
+      </nav>
+      
+      <div className="outer">
+        
+        <div className="newinner2">
       <div>
         <AppBar
           title="Reservation Portal"
@@ -457,6 +497,11 @@ class AppointmentApp extends Component {
           />
         </section>
       </div>
+      </div>
+      </div>
+      </div>
+      
+      
     );
   }
 }

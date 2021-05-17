@@ -8,15 +8,19 @@ export default class SignUp extends Component {
     
     constructor(props) {
     super(props);
+   
     this.state = {
+      
       modifiedData: {
-        'username': '',
+        'username':'',
         'password': '',
         'firstName': '',
         'lastName': '',
         'email': ''
       }
     }
+   
+    
 }
 
 handleInputChange = ({ target: { name, value } }) => {
@@ -42,46 +46,68 @@ handleInputChange = ({ target: { name, value } }) => {
         })
       };
 
+     componentDidMount(){
+       this.getUserDetails();
+       
+     }
+
+    getUserDetails = async () => {
+      const id = localStorage.getItem('userID');
+      const url = "https://dine-out-syracuse.herokuapp.com/signups/" +id;
+      const usersData = await axios.get(url);
+      console.log(usersData.data.username);
+     
+      this.setState({
+        modifiedData:{
+        username: [usersData.data.username],
+        password: [usersData.data.password],
+        firstName: [usersData.data.firstName],
+        lastName: [usersData.data.lastName],
+        email: [usersData.data.email],
+        
+        }
+    })
+    
+    
+    }
+     
+
     render() {
       const {modifiedData} = this.state;
+      console.log(modifiedData);
       if(this.state.userLoggedIn){
         return (<Redirect to="/sign-in" />);
 
       }
         return (
             <div className="App">
-              <div className ="App">
+              
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>Dine-Out</Link>
-          </div>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <Link className="navbar-brand" to={"/home"}>Dine-Out</Link>
+          
+        </div>
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>SignIn</Link>
+                <Link className="nav-link" to={"/home"}>Home</Link>
               </li>
+              
               <li className="nav-item">
-                <Link className="nav-link" to={"/sign-up"}>SignUp</Link>
+                <Link className="nav-link" to={"/"}>Logout</Link>
               </li>
-              <li className ="nav-item">
-                <Link className = "nav-link" to ={"/merchant-signin"}>Merchant SignIn </Link>
-              </li>
-              <li className ="nav-item">
-                <Link className = "nav-link" to ={"/merchant-signup"}>Merchant SignUp </Link>
-              </li>
-              <li className ="nav-item">
-            <div className = "nav-link" type = "text" > </div> </li>
-            </ul>
-            
-          </div>
-        
+              </ul>
+              
+              
+
+              </div>
       </nav>
       
       <div className="outer">
         
         <div className="newinner">
         <form onSubmit = {this.handleSubmit}>
-                    <h3>Register</h3>
+                    <h3>Profile</h3>
                     
                     
                     <div className="form-group">
@@ -103,7 +129,7 @@ handleInputChange = ({ target: { name, value } }) => {
                         <div id="mem" style= {{marginRight: 16 + 'em'}}>
                         <label>Last name</label>
                         </div>
-                        <input name="lastName" className="form-control" type="text" placeholder="Enter Your Last Name" onChange = {this.handleInputChange} value={modifiedData.lastName}/>
+                        <input name="lastName" className="form-control" type="text"  onChange = {this.handleInputChange} value={modifiedData.lastName}/>
                         </div>
 
                         <div className="form-group">
@@ -128,7 +154,7 @@ handleInputChange = ({ target: { name, value } }) => {
             </div>
             </div>
             </div>
-            </div>
+            
           
         );
     }

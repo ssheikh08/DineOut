@@ -17,18 +17,21 @@ export default class Home extends React.Component{
     componentDidMount(){
         // Make Rest call here to get restaurant details
         this.getHomePageDetails();
-        const id = localStorage.getItem('userID');
-        axios.get('https://dine-out-syracuse.herokuapp.com/' + "signups").then(response => {
-        const result = response.data.filter(row=>row.id==id)
+        const id = localStorage.getItem('merchID');
+        axios.get('https://dine-out-syracuse.herokuapp.com/' + "restaurant-infos").then(response => {
+        const result = response.data.filter(row=>row.merchant.id==id)
         this.state.username = result.firstName;
-        console.log(this.state.username)});
+        console.log(this.state.username)
+    });
     }
     
     getHomePageDetails = async () => {
-        const url = "https://dine-out-syracuse.herokuapp.com/restaurant-infos";
-        const restaurantsData = await axios.get(url);
+        const id = localStorage.getItem('merchID');
+        const url = 'https://dine-out-syracuse.herokuapp.com/' + "restaurant-infos";
+        const response = await axios.get(url);
+        const result = response.data.filter(row=>row.merchant.id==id);
         this.setState({
-            restaurants: restaurantsData.data
+            restaurants: result
         })
     }
 
@@ -44,8 +47,7 @@ export default class Home extends React.Component{
             const url = "https://dine-out-syracuse.herokuapp.com/restaurant-infos";
             const restaurantsData = await axios.get(url);
             const searchData = restaurantsData.data.filter(restaurantObj => {
-               return  restaurantObj.restName?.toLowerCase().startsWith(searchtext) || restaurantObj.restCity?.toLowerCase().startsWith(searchtext) ||
-               restaurantObj.categories?.toLowerCase().startsWith(searchtext);
+               return  restaurantObj.restName?.toLowerCase().startsWith(searchtext) || restaurantObj.restCity?.toLowerCase().startsWith(searchtext)||restaurantObj.categories?.toLowerCase().startsWith(searchtext);
             });
             this.setState({
                 restaurants: searchData
@@ -53,27 +55,23 @@ export default class Home extends React.Component{
     }
 
     render(){
-        const uid = localStorage.getItem('userID');
-        const path = "/userReservations/"+ uid;
+        const uid = localStorage.getItem('merchID');
+        const path = "/restaurantSignup/"+ uid;
         return(
             <div className ="App">
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/home"}>Dine-Out</Link>
+          <Link className="navbar-brand" to={"/sign-in"}>Dine-Out</Link>
          
         </div>
-        
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
-            <li className="nav-item">
-                <Link className="nav-link" to={path}>Reservations</Link>
+              <li className="nav-item">
+                <Link className="nav-link" to={path}>Restraunt Sign-up</Link>
               </li>
               <li className="nav-item">
-
-                <Link className="nav-link" to={"/profile"}>Profile</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/"}>Logout</Link>
+              
+                <Link className="nav-link" to='/merchant-signin'>LogOut</Link>
               </li>
               </ul>
 
@@ -88,7 +86,7 @@ export default class Home extends React.Component{
                     <Form onSubmit={this.searchRestaurants}>
                         <FormGroup>
                             <Input  type="text" name="search" id="search" maxLength="45" className="mb-3 mt-3"
-                                    placeholder="Search by Location/Name/Cuisine" onChange={this.handleInputChange}
+                                    placeholder="Search and Press Enter..." onChange={this.handleInputChange}
                                     value={this.state.search}/>
                         </FormGroup>
                         </Form>
