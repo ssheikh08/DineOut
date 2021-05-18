@@ -149,7 +149,14 @@ class AppointmentApp extends Component {
   //handle the appointment slot data from the database
   handleDBReponse(response) {
     const appointments = response;
-    const limit=appointments[0].restaurant_info.capacity
+
+    var limit
+    if (appointments)
+    {
+      if(appointments.restaurant_info)
+      {
+     limit=appointments.restaurant_info.capacity}}
+    else{limit =1}
     const today = moment().startOf("day"); //start of today 12 am
     const initialSchedule = {};
     initialSchedule[today.format("YYYY-DD-MM")] = true;

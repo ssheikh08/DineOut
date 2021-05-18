@@ -30,21 +30,23 @@ export default class RestaurantDetails extends React.Component{
           rating: newRating
         });
         console.log(this.state.rating)
-       this.putRatings();
+       this.putRatings(newRating);
     }
     
-    putRatings = async() => { 
+    putRatings(newRating){ 
         const id = this.props.match.params.id || 0;
-      console.log(this.state.rating);
+      console.log('newnew', newRating);
+      console.log('newnew222', this.state.restaurant.restRatings);
     axios
 .put(`https://dine-out-syracuse.herokuapp.com/restaurant-infos/${id}`, {
 ratings_count: this.state.restaurant.ratings_count +1,
-restRatings : (this.state.restaurant.restRatings + this.state.rating)/(this.state.restaurant.ratings_count +1)
+restRatings : (this.state.restaurant.restRatings + newRating)/(this.state.restaurant.ratings_count +1)
 })
 .then(response => {
 console.log(response);
 });
 }
+    
     
 
     getRestaurantData = async () => {
@@ -80,6 +82,20 @@ console.log(response);
               <li className="nav-item">
                 <Link className="nav-link" to={"/home"}>Home</Link>
               </li>
+
+              <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+            
+              <li className="nav-item">
+
+                <Link className="nav-link" to={"/profile"}>Profile</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/"}>Logout</Link>
+              </li>
+              </ul>
+
+              </div>
               </ul>
 
               </div>

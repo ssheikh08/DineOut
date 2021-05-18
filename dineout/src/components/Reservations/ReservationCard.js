@@ -23,7 +23,7 @@ export default class RestaurantCard extends React.Component{
             </Col>
             <Col xs={6}>
             
-                <CardImg className = {classes.imageDim} src={restaurant.restURL} alt="Card image" />
+                
                 
                 <CardBody>
                     <CardTitle tag="h5" title={restaurant.restName} className={classes.ellipsis}>{restaurant.restName}</CardTitle>

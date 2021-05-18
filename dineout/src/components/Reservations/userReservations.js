@@ -17,6 +17,7 @@ export default class Home extends React.Component{
     componentDidMount(){
         // Make Rest call here to get restaurant details
         this.getHomePageDetails();
+        console.log(this.state.restaurants)
         const id = localStorage.getItem('userID');
         axios.get('https://dine-out-syracuse.herokuapp.com/' + "signups").then(response => {
         const result = response.data.filter(row=>row.id==id)
@@ -25,15 +26,10 @@ export default class Home extends React.Component{
     }
     
     getHomePageDetails = async () => {
-        axios.get("https://dine-out-syracuse.herokuapp.com/restreservations").then(response => {
-            const id = localStorage.getItem('userID');
-            const result = response.data.filter(row=>row.id==id);
-            console.log(result);
-            //this.state.username = result.firstN;
-        //     console.log(this.state.username)});
-        // const restaurantsData = await axios.get(url);
-        // this.setState({
-        //     restaurants: restaurantsData.data
+        const url = "https://dine-out-syracuse.herokuapp.com/restaurant-infos";
+        const restaurantsData = await axios.get(url);
+        this.setState({
+            restaurants: restaurantsData.data
         })
     }
 
@@ -74,11 +70,9 @@ export default class Home extends React.Component{
                 
                 
                     
-                        { this.state.restaurants && this.state.restaurants.length > 0 ? this.state.restaurants.map(restaurant => 
-                           <div className = " col-xl-4" key={restaurant.id} >
-                                <Link to = {{
-                                    pathname: `/restaurant/${restaurant.id}`, restaurantObj: restaurant,
-                                }}><ReservationCard key={restaurant.id} restaurantObj = {restaurant}/> </Link>
+            { this.state.restaurants && this.state.restaurants.length > 0 ? this.state.restaurants.map(restaurant => 
+                           <div className = "" key={restaurant.id} >
+                                <ReservationCard key={restaurant.id} restaurantObj = {restaurant}/> 
                             
                             
                             </div>) : null }

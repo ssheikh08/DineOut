@@ -57,6 +57,7 @@ export default class Home extends React.Component{
     render(){
         const uid = localStorage.getItem('merchID');
         const path = "/restaurantSignup/"+ uid;
+        const reserPath = "/merchantReservations/"+uid;
         return(
             <div className ="App">
             <nav className="navbar navbar-expand-lg navbar-light fixed-top">
@@ -66,6 +67,10 @@ export default class Home extends React.Component{
         </div>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+              
+              <Link className="nav-link" to={reserPath}>Reservations</Link>
+            </li>
               <li className="nav-item">
                 <Link className="nav-link" to={path}>Restraunt Sign-up</Link>
               </li>

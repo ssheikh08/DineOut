@@ -14,7 +14,8 @@ import RestaurantDetails from './components/Restaurant/RestaurantDetails';
 import RestaurantSignup from './components/registerrestaurant.component';
 import RestaurantHome from './components/RestaurantHome/RestaurantHome';
 import Profile from './components/Profile.component';
-import UserReservations from './components/Reservations/userReservations'
+import UserReservations from './components/Reservations/userReservations';
+import MerchantReservations from './components/Reservations/merchantReservationPage';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path = "/restaurantHome/:id" component = {RestaurantHome}/>
             <Route path = "/profile" component = {Profile}/>
             <Route path = "/userReservations/:id" component = {UserReservations}/>
+            <Route path = "/merchantReservations/:id" component = {MerchantReservations}/>
             
             
           
